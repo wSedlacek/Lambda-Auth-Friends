@@ -3,24 +3,24 @@ import { FriendsActions } from './friends.actions';
 
 export type FriendsState = {
   list: Friend[];
-  error: string;
   loading: boolean;
+  error: string;
 };
 
 const initialState: FriendsState = {
   list: [],
-  error: '',
   loading: false,
+  error: '',
 };
 
 export const friendsReducer = (state = initialState, action: FriendsActions) => {
   switch (action.type) {
     case 'GET_FRIENDS_START':
-      return { ...state, error: '', loading: true };
+      return { ...state, loading: true, error: '' };
     case 'GET_FRIENDS_SUCCESS':
-      return { ...state, error: '', loading: false, list: action.payload };
+      return { ...state, list: action.payload, loading: false, error: '' };
     case 'GET_FRIENDS_FAILURE':
-      return { ...state, error: action.payload, loading: false, list: [] };
+      return { ...state, list: [], loading: false, error: action.payload };
 
     case 'CLEAR_ERROR':
       return { ...state, error: '' };

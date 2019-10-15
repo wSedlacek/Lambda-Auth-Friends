@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { makeStyles } from '@material-ui/core';
+import { CircularProgress, makeStyles } from '@material-ui/core';
 
 import { User } from '../models/User';
 import { State } from '../state/app.reducer';
@@ -23,7 +23,9 @@ const Login = () => {
   const classes = useStyles({});
   const dispatch = useDispatch();
   const history = useHistory();
+
   const token = useSelector<State, string>((state) => state.auth.token);
+  const loading = useSelector<State, boolean>((state) => state.auth.loading);
 
   React.useEffect(() => {
     checkToken()(dispatch);
@@ -35,7 +37,9 @@ const Login = () => {
 
   return (
     <div className={classes.root}>
-      <LoginForm onSubmit={(user: User) => login(user)(dispatch)} />
+      {(loading && <CircularProgress color='secondary' />) || (
+        <LoginForm onSubmit={(user: User) => login(user)(dispatch)} />
+      )}
     </div>
   );
 };
